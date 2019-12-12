@@ -1,0 +1,15 @@
+#! /bin/bash
+
+for i in $(ls dataset)
+do
+    /usr/bin/python src/*.py < dataset/$i > out/$i
+    cmp out/$i answer/$i.a
+    if [ $? == 0 ]
+    then
+        echo "#$i Pass!"
+    else
+        echo "#$i Fail!"
+    fi
+done
+
+

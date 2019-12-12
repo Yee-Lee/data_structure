@@ -1,0 +1,24 @@
+#! /bin/bash
+
+SYSTEM=$1
+TOPIC=$2
+SRC=$TOPIC/src
+EXEC=$TOPIC/build/apps/a.out
+OUTPUT=$TOPIC/build/apps/output
+DATASET=$TOPIC/dataset
+ANSWER=$TOPIC/answer
+
+if [ $SYSTEM == "cpp" ]
+then
+	echo "Clean & Compiling ..."
+	cd $TOPIC && make clean && make run
+	cd ..
+elif [ $SYSTEM == "py" ]
+then
+	cd $TOPIC && ./runpy
+	cd ..
+elif [ $SYSTEM == "pydebug" ]
+then
+	cd $TOPIC && ./runpydebug
+	cd ..
+fi

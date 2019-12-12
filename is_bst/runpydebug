@@ -1,0 +1,8 @@
+#! /bin/bash
+
+for i in $(ls dataset)
+do
+    /usr/bin/python src/*.py < dataset/$i
+done
+
+
