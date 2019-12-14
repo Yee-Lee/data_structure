@@ -1,0 +1,21 @@
+#! /bin/bash
+
+SRC=./src
+EXEC=./build/apps/a.out
+OUTPUT=./out
+DATASET=./dataset
+ANSWER=./answer
+
+echo "Run ..."
+for i in $(ls $DATASET)
+do
+	$EXEC < $DATASET/$i > $OUTPUT/$i
+	cmp $OUTPUT/$i $ANSWER/$i.a
+	if [ $? == 1 ]
+	then 
+		echo "Dataset:$i Fail!"
+	else
+		echo "Dataset:$i Pass!"
+	fi
+done
+	#$TOPIC/build/apps/a.out < 
