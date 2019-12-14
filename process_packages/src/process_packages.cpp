@@ -31,6 +31,31 @@ public:
 
     Response Process(const Request &request) {
         // write your code here
+        while(!finish_time_.empty()){
+            if (finish_time_.front() <= request.arrival_time){
+                finish_time_.pop();
+            }else { 
+                break;
+            }
+        }
+        int f = 0;
+        int s = 0;
+        bool drop = false;
+        int n = (int)finish_time_.size();
+        if(n == 0){
+            s = request.arrival_time;
+            f = s + request.process_time;
+            finish_time_.push(f);
+        }else if (n>=size_){
+            drop = true;
+        }else{
+            s = finish_time_.back();
+            f = s + request.process_time;
+            finish_time_.push(f);
+        }
+
+        Response r(drop, s);
+        return r;
     }
 private:
     int size_;
@@ -51,13 +76,13 @@ std::vector <Request> ReadRequests() {
 
 std::vector <Response> ProcessRequests(const std::vector <Request> &requests, Buffer *buffer) {
     std::vector <Response> responses;
-    for (int i = 0; i < requests.size(); ++i)
+    for (int i = 0; i < (int)requests.size(); ++i)
         responses.push_back(buffer->Process(requests[i]));
     return responses;
 }
 
 void PrintResponses(const std::vector <Response> &responses) {
-    for (int i = 0; i < responses.size(); ++i)
+    for (int i = 0; i < (int)responses.size(); ++i)
         std::cout << (responses[i].dropped ? -1 : responses[i].start_time) << std::endl;
 }
 
